@@ -1,0 +1,31 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Request Form</h1>
+    <form [formGroup]="registrationForm" (ngSubmit)="register()">
+      <div class="form-group">
+        <label for="name">Subject</label>
+        <input type="text" class="form-control" id="subject" formControlName="subject">
+        <div  *ngIf="(controls['subject'].touched || submitted) && controls['subject'].getError('required')!=null" class="errorMessage" class="alert alert-danger">
+          Subject is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="body">Body</label>
+        <input type="text" class="form-control" id="body" formControlName="body">
+        <div  *ngIf="(controls['body'].touched || submitted) && controls['body'].getError('required')!=null" class="errorMessage" class="alert alert-danger">
+          Body is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="power">Request Type</label>
+        <select class="form-control" id="requestTypeId" formControlName="requestTypeId" name="requestTypeId">
+          <option  value="0" >--Choose Request Type--</option>
+          <option *ngFor="let type of requestTypes" [value]="type.id">{{type.type}}</option>
+        </select>
+        <div *ngIf="(controls['requestTypeId'].touched || submitted) && controls['requestTypeId'].getError('selectDefaultCityOption')!=null" class="alert alert-danger">
+          Choose Request Type
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!registrationForm.valid">Submit</button>
+    </form>
+  </div>

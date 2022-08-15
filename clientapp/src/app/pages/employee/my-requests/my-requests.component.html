@@ -1,0 +1,13 @@
+<div *ngIf="numberOfRequests===0" class="external-event bg-warning ui-draggable ui-draggable-handle"
+style="position: relative; z-index: auto; left: 0px; top: 0px;">No Available requests yet</div>
+<div *ngFor="let req of requests" class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title m-0">{{requestTypes| requestType :req.requestTypeId}} </h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-title">{{req.subject}}</h6>
+      <p class="card-text">{{req.body}}</p>
+    </div>
+  </div>
+</div>

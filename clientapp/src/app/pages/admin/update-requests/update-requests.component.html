@@ -1,0 +1,15 @@
+<div *ngIf="numberOfRequests===0" class="external-event bg-warning ui-draggable ui-draggable-handle"
+style="position: relative; z-index: auto; left: 0px; top: 0px;">No Available requests yet</div>
+<div *ngFor="let req of requests" class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title m-0">{{req.requestType}}</h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-title">{{req.subject}}</h6>
+      <p class="card-text">{{req.body}}</p>
+      <button (click)="onClick(req,1)" class="btn btn-primary">Approve</button>
+      <button (click)="onClick(req,2)" class="btn btn-danger">Reject</button>
+    </div>
+  </div>
+</div>

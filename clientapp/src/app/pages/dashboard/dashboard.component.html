@@ -1,0 +1,58 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Dashboard</h1>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+
+            <div *ngIf="!isAdmin" class="col-lg-3 col-6">
+
+                <!-- small box -->
+                <div class="small-box bg-info">
+                  <a routerLink="/new-request" class="small-box-footer"
+                        >Create Request <i class="fas fa-file"></i></a>
+                    <div class="inner">
+                        <h3>{{this.numberOfRequest}}</h3>
+                        <p>Number of Requests</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion-android-attach"></i>
+                    </div>
+                        <a routerLink="/my-requests" class="small-box-footer"
+                        >Show My Requests <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        <!-- ./col -->
+        <div *ngIf="isAdmin" class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>{{this.numberOfRequest}}</h3>
+
+              <p>Number of Requests</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a routerLink="/update-requests" class="small-box-footer">Check Requests <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- Main row -->
+</section>
+<!-- /.content -->

@@ -1,0 +1,28 @@
+<app-dropdown size="lg">
+    <ng-container dropdown-button>
+        <i class="far fa-bell"></i>
+        <span class="badge badge-warning navbar-badge">{{this.notOpenedNotifications}}</span>
+    </ng-container>
+    <ng-container dropdown-menu>
+        <span class="dropdown-item dropdown-header">{{this.notOpenedNotifications}} Notifications</span>
+        <div class="dropdown-divider"></div>
+        <ng-container *ngFor="let item of notifications">
+        <a href="#" style="font-size: 12px;" class= "dropdown-item">
+            <i class="fas fa-file mr-2"></i> {{item.message}}
+            <span class="float-right text-muted text-sm">{{item.createdAt|pastDateTime}}</span>
+        </a>
+        <div class="dropdown-divider"></div>
+      </ng-container>
+        <a href="#" class="dropdown-item dropdown-footer"
+            >See All Notifications</a
+        >
+    </ng-container>
+</app-dropdown>
+
+<ng-template #notification>
+    <a href="#" class="dropdown-item">
+        <i class="fas fa-envelope mr-2"></i> 4 new messages
+        <span class="float-right text-muted text-sm">3 mins</span>
+    </a>
+    <div class="dropdown-divider"></div>
+</ng-template>
