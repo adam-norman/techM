@@ -32,10 +32,10 @@ export class RequestFormComponent implements OnInit {
   constructor(private requestService:RequestFormService,private authService: AuthenticationService,
     private _router: Router,) { }
 
-
-
   ngOnInit(): void {
-    this.userId= this.authService.getUserId();
+    this.authService.getCurrentUser().subscribe(u=>{
+      this.userId=u.userId;
+    });
     this.registrationForm.controls.employeeId.setValue(this.userId);
 
   }

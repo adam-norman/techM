@@ -16,7 +16,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsApi",
         builder => builder.WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
-            .AllowAnyMethod());
+            .AllowAnyMethod()
+            .AllowCredentials());
 });
 var app = builder.Build();
 
@@ -28,7 +29,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 app.UseCors("CorsApi");
-
+app.UseWebSockets();
 app.UseOcelot().Wait();
 
 app.UseAuthorization();

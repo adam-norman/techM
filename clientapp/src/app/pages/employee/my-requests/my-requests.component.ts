@@ -18,7 +18,9 @@ export class MyRequestsComponent implements OnInit {
     ) { }
   requests:RequestFormViewModel[]=[];
   ngOnInit(): void {
-  this.userId= this.authService.getUserId();
+    this.authService.getCurrentUser().subscribe(u=>{
+      this.userId=u.userId;
+    });
     this.loadRequests({ pageSize: 10, pageNumber: 1 });
   }
 

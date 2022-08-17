@@ -23,8 +23,7 @@ namespace RequestApp.CommonService
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<Employee>>(TokenOptions.DefaultProvider);
             services.Configure<IdentityOptions>(configuration.GetSection(nameof(IdentityOptions)));
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSignalR();
+            
             services.AddTransient<RequestFormService>(); 
                 services.AddTransient<NotificationService>();
             #region Fluent Validation
@@ -39,6 +38,21 @@ namespace RequestApp.CommonService
                 var request = accessor.HttpContext.Request;
                 var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
                 return new UriService(uri);
+            });
+            #endregion
+
+            #region SignalR
+            services.AddSignalR();
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsApi",
+                    builder => builder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .WithOrigins("http://localhost:4200")
+                        );
             });
             #endregion
             return services;

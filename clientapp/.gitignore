@@ -6,7 +6,13 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
-
+.vs/
+RequestApp/.vs
+RequestApp/bin
+RequestApp/obj
+bin
+obj
+packages
 # dependencies
 /node_modules
 

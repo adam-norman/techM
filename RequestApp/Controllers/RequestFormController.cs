@@ -7,9 +7,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Repositories.IRepositories;
 using RequestApp.Filter;
 using RequestApp.Helpers;
+using RequestApp.Hubs;
 using RequestApp.Services;
 
 namespace RequestApp.Controllers
@@ -21,12 +23,14 @@ namespace RequestApp.Controllers
         private readonly IMediator _mediator;
         private readonly RequestFormService _requestFormService;
         private readonly IValidator<RequestFormViewModel> _validator;
+        private readonly IHubContext<NotificationHub, IHubClient> _hubContext;
 
         public RequestFormController(IRepositoryWrapper dbContext, IMapper mapper,
             IUriService uriService, UserManager<Employee> userManager,
             IMediator mediator
             , RequestFormService requestFormService,
-            IValidator<RequestFormViewModel> validator
+            IValidator<RequestFormViewModel> validator,
+            IHubContext<NotificationHub, IHubClient> hubContext
             )
         {
             _mapper = mapper;
@@ -34,6 +38,7 @@ namespace RequestApp.Controllers
             _mediator = mediator;
             _requestFormService = requestFormService;
             _validator = validator;
+            _hubContext = hubContext;
         }
         [Authorize(Roles = "administrator")]
         [HttpGet("GetAllRequests")]
@@ -58,12 +63,12 @@ namespace RequestApp.Controllers
                 return StatusCode(201);
             }
             else
-            { 
+            {
                 return BadRequest();
             }
         }
-        
-        
+
+
         [Authorize(Roles = "employee")]
         [HttpGet("GetMyRequests/{userId}")]
         public async Task<IActionResult> GetMyRequests(string userId, [FromQuery] PaginationFilter filter)
@@ -75,15 +80,15 @@ namespace RequestApp.Controllers
             var pagedReponse = PaginationHelper.CreatePagedReponse<RequestFormViewModel>(requests, validFilter, totalRecords, _uriService, route);
             return Ok(pagedReponse);
         }
-        
-        
+
+
         [Authorize(Roles = "administrator")]
         [HttpPost("UpdateRequest")]
         public async Task<IActionResult> UpdateRequest([FromBody] RequestFormViewModel requestFormViewModel)
         {
             if (Validate(requestFormViewModel, _validator))
             {
-                var dbRequest =   _requestFormService.GetRequestById(requestFormViewModel.Id).Result;
+                var dbRequest = _requestFormService.GetRequestById(requestFormViewModel.Id).Result;
                 if (dbRequest == null)
                 {
                     return NotFound("Not Found Request");
@@ -91,7 +96,7 @@ namespace RequestApp.Controllers
                 dbRequest.HasApproved = requestFormViewModel.HasApproved;
                 _requestFormService.UpdateRequest(dbRequest);
                 SendNotification(requestFormViewModel);
-            return StatusCode(201);
+                return StatusCode(201);
             }
             else
             {
@@ -103,7 +108,11 @@ namespace RequestApp.Controllers
             var status = request.HasApproved == 1 ? "Approval" : "Rejected";
             var message = $"{request.RequestType} Request {status}";
             var sendNotificationCommand = new SendNotificationCommand(message, request.EmployeeId, 0);
-            await _mediator.Send(sendNotificationCommand);
+            var res = await _mediator.Send(sendNotificationCommand);
+            //if (res.Equals(true))
+            //{
+                await _hubContext.Clients.All.BroadcastMessage();
+            //}
         }
     }
 }

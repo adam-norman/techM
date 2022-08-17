@@ -21,7 +21,6 @@ export class UpdateRequestsComponent implements OnInit {
     });
   }
   onClick(req:RequestFormViewModel,status){
-    debugger;
     req.hasApproved=status;
     this._requestService.updateRequest(req)
     .subscribe(res=>{ });

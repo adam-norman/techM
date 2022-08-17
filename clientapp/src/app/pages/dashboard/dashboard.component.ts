@@ -10,15 +10,19 @@ import { RequestFormService } from '@services/requestForm.service';
 export class DashboardComponent implements OnInit {
   numberOfRequest: number;
   isAdmin=false;
+  userId: string;
+  role: string;
 constructor(private requestService:RequestFormService, private _authService : AuthenticationService){}
   ngOnInit(): void {
-    debugger;
-    this.isAdmin=  this._authService.getUserRole()==="administrator";
+    this._authService.getCurrentUser().subscribe(u=>{
+      this.userId=u.userId;
+      this.role=u.role;
+    });
+    this.isAdmin=  this.role==="administrator";
     if(!this.isAdmin){
-      this.requestService.getMyRequests(this._authService.getUserId(),{pageSize:10, pageNumber: 1})
+      this.requestService.getMyRequests(this.userId,{pageSize:10, pageNumber: 1})
         .subscribe(res=>{
           this.numberOfRequest = res.data.length;
-          console.log(res.data);
         });
     }
     else{
