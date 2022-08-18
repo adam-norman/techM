@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/accounts/login",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/accounts/login",
@@ -14,11 +14,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/accounts/registration",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/accounts/register",
@@ -26,11 +26,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/requestForm/AddRequest",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/requestForm/addRequest",
@@ -38,11 +38,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/requestForm/getMyRequests/{userId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/requestForm/getRequestByUserId/{userId}",
@@ -50,11 +50,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/RequestForm/GetAllRequests",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/RequestForm/getAllRequests",
@@ -62,11 +62,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/requestForm/updateRequest",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/requestForm/processRequest",
@@ -74,11 +74,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/notification/getUserNotifications/{userId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/notification/getUserNotifications/{userId}",
@@ -86,11 +86,11 @@
     },
     {
       "DownstreamPathTemplate": "/notify/negotiate",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/notify/negotiate",
@@ -101,8 +101,8 @@
       "DownstreamScheme": "wss",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/notify",
@@ -111,16 +111,18 @@
     ,
     {
       "DownstreamPathTemplate": "/notify",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "requestapp",
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/notify",
       "UpstreamHttpMethod": [ "Delete" ]
     }
   ],
-  "GlobalConfiguration": {}
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
 }

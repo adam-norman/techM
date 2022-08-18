@@ -2,7 +2,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddJsonFile("ocelot.json");
+builder.Configuration.AddJsonFile("Ocelot.json");
 
 // Add services to the container.
  
@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseCors("CorsApi");
 app.UseWebSockets();
 app.UseOcelot().Wait();

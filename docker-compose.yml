@@ -3,18 +3,17 @@ version: '3.4'
 services:
     requestsdb:
         image: mcr.microsoft.com/mssql/server:2017-latest
-
     requestapp:
         image: ${DOCKER_REGISTRY-}requestapp
         build:
             context: .
-            dockerfile: Dockerfile
-
+            dockerfile: RequestApp/Dockerfile
+  
     ocelotapigatway:
         image: ${DOCKER_REGISTRY-}ocelotapigatway
         build:
             context: .
-            dockerfile: ./OcelotApiGatway/Dockerfile
+            dockerfile: OcelotApiGatway/Dockerfile
         depends_on:
             - requestsdb
             - requestapp

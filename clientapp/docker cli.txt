@@ -1,0 +1,3 @@
+docker build -t frontend .
+docker run -d -it -p 80:80/tcp --name frontend frontend
+docker exec -it container_name/container_ID sh
